@@ -4,6 +4,7 @@ word-environment
 This app uses the Moby project parts of speech catalog which I parsed into a JSON file (posDic.js) that can be found in the root directory. The user inputs a sentence or a block of text and clicks "begin". In the next step the words are analyzed and presented in a vertical list with a series of buttons below each word for each possible part of speech for that word according to the Moby catalog. When the user has selected a part of speech for each word and clicks "finished", the graph database will store a "word environment" for each word.
 
 Word Environments
+-----------------
 
 A word environment consists of a word nucleus stored alongside its preceeding and succeeding words, for example:
 
