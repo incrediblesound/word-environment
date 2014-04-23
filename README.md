@@ -12,4 +12,4 @@ A word environment consists of a word nucleus stored alongside its preceeding an
 
 Here the words "a" and "woman" serve as the environment for the word "beautiful" and as a result of this word environment it may be predicted that the word "beautiful" might fall between an article and a noun and that an adjective might fall between an article and a noun.
 
-While many projects seek entirely automated machine learning algorithms, I think this shows the potential power an accuracy of a simple algorithm when aided by learned human input.
+While many projects seek entirely automated machine learning algorithms, I think this program shows the potential power and accuracy of a simple algorithm when aided by learned human input.
