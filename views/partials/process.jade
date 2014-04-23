@@ -1,0 +1,11 @@
+div.col-md-4
+  div(ng-repeat='sentence in data.s')
+    p {{sentence}}
+div.col-md-4
+  div(ng-repeat='list in data.w')
+    div(ng-repeat='word in list')
+      posselect
+        p {{word.word}}
+        div(ng-repeat='part in word.parts')
+          button(ng-click='select(part, word.location)', class='btn btn-default') {{change(part)}}
+  button(ng-click='finish()', class='btn btn-default') Finished
