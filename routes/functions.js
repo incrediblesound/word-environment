@@ -100,11 +100,15 @@ function rejectEmpty(array) {
 }
 
 function noPunc(word) {
-  var punc = word.match(/\!|\.|\?|\"|\'|\,/);
-  if(punc !== null) {
-    word = word.replace(punc[0], '');
+  var initial = word[0].match(/\!|\.|\?|\"|\'|\,/),
+      Final = word[word.length-1].match(/\!|\.|\?|\"|\'|\,/);
+  if(initial !== null) {
+    word = word.substring(1, word.length);
   };
-  if(word.match(/\!|\.|\?|\"|\'|\,/) !== null) {
+  if(Final !== null) {
+    word = word.substring(0, word.length-1);
+  };
+  if(word[0].match(/\!|\.|\?|\"|\'|\,/) !== null || word[word.length-1].match(/\!|\.|\?|\"|\'|\,/) !== null) {
     return noPunc(word);
   } else {
     return word;

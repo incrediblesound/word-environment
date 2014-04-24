@@ -33,6 +33,7 @@ app.get('/partials/:name', routes.partials);
 app.post('/cooker/', routes.returnData);
 app.get('/library/', routes.getLibrary);
 app.post('/storeData', routes.storeData);
+app.post('/analyze/', routes.analyze);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

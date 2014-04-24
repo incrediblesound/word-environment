@@ -30,11 +30,32 @@ exports.getLibrary = function(req, res) {
 	});
 }
 
+exports.analyze = function(req, res) {
+	var Master = req.body;
+	var log = [];
+	forEach(Master, function (sentence) {
+		var multiples = [];
+		forEach(sentence, function (word, i) {
+			if(word.parts.length > 1) {
+				multiples.push(i);
+			}
+		})
+		log.push(multiples);
+	})
+	forEach(log, function(sentenceLog, a) {
+		forEach(sentenceLog, function(variable, b) {
+
+		})
+	})
+
+}
+
 exports.storeData = function(req, res) {
 	var first = 'CREATE (n:Word {value: ({word}), pos: ({pos})})-[:PRECEDES]->(:Env {value:({wordTwo}), pos:({posTwo})})';
 	var last = 'CREATE (n:Word {value: ({word}), pos:({pos})})-[:FOLLOWS]->(:Env {value:({wordTwo}), pos:({posTwo})})';
 	var middle = 'CREATE (:Env {value:({wordPre}), pos:({posPre})})<-[:FOLLOWS]-(:Word {value:({word}), pos:({pos})})-[:PRECEDES]->(:Env {value:({wordTwo}), pos:({posTwo})})'
 	var data = req.body;
+	console.log(data);
 	var params;
 	forEach(data, function(sentence, a){
 		var type = [];
@@ -63,5 +84,30 @@ exports.storeData = function(req, res) {
 function forEach(array, fn) {
   for(var i = 0; i < array.length; i++) {
     fn(array[i], i);
+  }
+}
+
+var wordMatchMiddle = function(a,b) { //need separate function for first and last.
+	var word = Master[a][b],
+      schema = [ Master[a][b-1].parts, Master[a][b+1].parts];
+	var params = {word: word.word};
+	var Env = [];
+	if(word.parts.length > 1) {
+		dq.query('MATCH (n:Word)\nWHERE n.value = ({word})\nRETURN n', params, function (err, check) {
+			if(!!check.n) {
+				dq.query('MATCH (a:Env)<-[:FOLLOWS]-(n:Word)-[:PRECEDES]->(b:Env)\nWHERE n.value = ({word})\nRETURN a,b,n',params, function (err, data) {
+					if(schema[0].indexOf(data.a._data.data.pos) !== -1 && schema[1].indexOf(data.b._data.data.pos) !== -1) {
+            Master[a][b].parts = data.n._data.data.pos;
+            Master[a][b-1].parts = data.a._data.data.pos;
+            Master[a][b+1].parts = data.b._data.data.pos;
+            return;
+          }
+				})
+			} else {
+				return;
+			}
+		})	
+	} else { 
+		return; 
   }
 }

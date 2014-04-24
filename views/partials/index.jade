@@ -1,4 +1,8 @@
-h2 Enter a block of grammatically coherent text
 div.col-md-6
+  h2 Enter text for database storage
   textarea.form-control(ng-model='form.text', rows='15', cols='30', placeholder='Enter text here.')
-  button(ng-click='action()', class='btn btn-default') Begin
+  button(ng-click='enter()', class='btn btn-default') Begin
+div.col-md-6
+  h2 Enter text for analysis
+  textarea.form-control(ng-model='form.text', rows='15', cols='30', placeholder='Enter text here.')
+  button(ng-click='analyze()', class='btn btn-default') View

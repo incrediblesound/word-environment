@@ -1,0 +1,16 @@
+words with multiple p.o.s :
+for each word
+	if
+		Match word -> check if pattern in database matches a pattern in available p.o.s -> start over
+	if
+		no matches :
+
+			select word with fewest possibilities -> check for pattern in database for each possibility
+
+			if
+				no matches :
+				
+					end
+
+
+have ['N' 'V'] a ['N' 'P' 'V' 'D'] really ['v' '!']
