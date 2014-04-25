@@ -2,6 +2,7 @@
 var processInput = require('./functions.js').process;
 var cookData = require('./functions.js').cook;
 var library = require('./functions.js').getLib;
+var predictor = require('./algorithm.js').predictor;
 
 var neo = require('neo4j');
 var db = new neo.GraphDatabase('http://localhost:7474');
@@ -32,21 +33,9 @@ exports.getLibrary = function(req, res) {
 
 exports.analyze = function(req, res) {
 	var Master = req.body;
-	var log = [];
-	forEach(Master, function (sentence) {
-		var multiples = [];
-		forEach(sentence, function (word, i) {
-			if(word.parts.length > 1) {
-				multiples.push(i);
-			}
-		})
-		log.push(multiples);
-	})
-	forEach(log, function(sentenceLog, a) {
-		forEach(sentenceLog, function(variable, b) {
-
-		})
-	})
+  predictor(Master, function (data) {
+    console.log(data[0]);
+  })
 
 }
 
@@ -87,27 +76,4 @@ function forEach(array, fn) {
   }
 }
 
-var wordMatchMiddle = function(a,b) { //need separate function for first and last.
-	var word = Master[a][b],
-      schema = [ Master[a][b-1].parts, Master[a][b+1].parts];
-	var params = {word: word.word};
-	var Env = [];
-	if(word.parts.length > 1) {
-		dq.query('MATCH (n:Word)\nWHERE n.value = ({word})\nRETURN n', params, function (err, check) {
-			if(!!check.n) {
-				dq.query('MATCH (a:Env)<-[:FOLLOWS]-(n:Word)-[:PRECEDES]->(b:Env)\nWHERE n.value = ({word})\nRETURN a,b,n',params, function (err, data) {
-					if(schema[0].indexOf(data.a._data.data.pos) !== -1 && schema[1].indexOf(data.b._data.data.pos) !== -1) {
-            Master[a][b].parts = data.n._data.data.pos;
-            Master[a][b-1].parts = data.a._data.data.pos;
-            Master[a][b+1].parts = data.b._data.data.pos;
-            return;
-          }
-				})
-			} else {
-				return;
-			}
-		})	
-	} else { 
-		return; 
-  }
-}
+
