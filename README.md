@@ -12,4 +12,6 @@ A word environment consists of a word nucleus stored alongside its preceeding an
 
 Here the words "a" and "woman" serve as the environment for the word "beautiful" and as a result of this word environment it may be predicted that the word "beautiful" might fall between an article and a noun and that an adjective might fall between an article and a noun.
 
-While many projects seek entirely automated machine learning algorithms, I think this program shows the potential power and accuracy of a simple algorithm when aided by learned human input.
+The current algorithm uses the former method: for each word with multiple possible parts of speech the algorithm checks for that word in the database. If that word is found in the database and the parts of speech of the evironment of that word as stored in the database match possible parts of speech for the sentence being checked then the algorithm sets the p.o.s. of all three words to the p.o.s of the word-environment found in the database. A psudo-code description of the algorithm can be found in /prediction-algrthm.txt, and the code itself in /routes/algorithm.js.
+
+Possibilities for development include adding a fallback algorithm that checks for matching parts of speech patterns only instead of exact words.
